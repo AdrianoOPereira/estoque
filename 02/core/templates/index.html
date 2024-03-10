@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Total Express</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/total-express-logo.png' %}" alt="Total Express Logo" style="width: 300px; height: auto;">
+        <h1>Estoque</h1>
+    </header>
+    <main>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Qtde</th>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                    <th>R$ Unitário</th>
+                    <th>R$ Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estoque in estoques %}
+                    <tr>
+                        <td>{{ estoque.Qtde }}</td>
+                        <td>{{ estoque.Codigo }}</td>
+                        <td>{{ estoque.Descricao }}</td>
+                        <td>{{ estoque.Unitario }}</td>
+                        <td>{{ estoque.Total }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</body>
+</html>

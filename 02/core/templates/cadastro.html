@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Total Express</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/total-express-logo.png' %}" alt="Total Express Logo" style="width: 300px; height: auto;">
+        <h1>Estoque</h1>
+    </header>
+    <main>
+        </table>
+        <form method="post" action="{% url 'salvar' %}">
+            {% csrf_token %}
+            <h4>Qtde</h4>
+            <input type="text" name="Qtde" required>
+            <h4>Código</h4>
+            <input type="text" name="Codigo" required>
+            <h4>Descrição</h4>
+            <input type="text" name="Descricao" required>
+            <h4>Unitário</h4>
+            <input type="text" name="Unitario" required>
+            <h4>Total</h4>
+            <input type="text" name="Total" required>
+            <button type="submit">Salvar</button>
+        </form>
+    </main>
+    <!-- Se necessário, adicione o script aqui -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    
+            // Selecione os elementos de entrada
+            var inputQtde = document.querySelector('input[name="Qtde"]');
+            var inputUnitario = document.querySelector('input[name="Unitario"]');
+            var inputTotal = document.querySelector('input[name="Total"]');
+    
+            // Adicione um ouvinte de evento de mudança a inputQtde e inputUnitario
+            [inputQtde, inputUnitario].forEach(function (input) {
+                input.addEventListener('change', calcularTotal);
+            });
+    
+            // Função para calcular o valor total
+            function calcularTotal() {
+                var qtde = parseFloat(inputQtde.value);
+                var unitario = parseFloat(inputUnitario.value);
+    
+                // Verifique se os valores são números válidos
+                if (!isNaN(qtde) && !isNaN(unitario)) {
+                    var total = qtde * unitario;
+    
+                    // Atualize o valor do campo Total
+                    inputTotal.value = total.toFixed(2); // Arredonde para 2 casas decimais
+                } else {
+                    // Limpe o campo Total se os valores não forem válidos
+                    inputTotal.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
