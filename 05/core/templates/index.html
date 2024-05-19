@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Total Express</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="col-11 text-right">
+        <button id="btnAbrirModal" class="btn btn-primary">Cadastro</button>
+    </div> 
+
+    <header>
+        <img src="{% static 'images/total-express-logo.png' %}" 
+        alt="Total Express Logo" style="width: 300px; height: auto;">
+        <h1>Estoque</h1>
+    </header>
+
+    <main>
+        <table class="table">  
+            <thead class="thead-dark">
+                <tr>
+                    <th>Qtde</th>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                    <th>R$ Unitário</th>
+                    <th>R$ Total</th>
+                    <th class="coluna-estatica">Ações</th>
+                </tr>   
+            </thead>
+
+            <tbody>
+                {% for estoque in estoques %}
+                    <tr>
+                        <td>{{ estoque.Qtde }}</td>
+                        <td>{{ estoque.Codigo }}</td>
+                        <td>{{ estoque.Descricao }}</td>
+                        <td>{{ estoque.Unitario }}</td>
+                        <td>{{ estoque.Total }}</td>
+                        <td>
+                            <a href="{% url 'editar' estoque.id %}" 
+                            class="btn btn-primary">Editar</a>
+                            
+                            <a href="{% url 'delete' estoque.id %}"
+                            class="btn btn-danger">Deletar</a>
+                        </td>
+                    </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <dialog id="cadastroModal">
+            <h2>Cadastro de Estoque</h2>
+            <form method="POST" action="{% url 'salvar' %}">
+                {% csrf_token %}
+                
+                <label for="Qtde">Quantidade:</label>
+                <input type="number" id="Qtde" name="Qtde" required><br><br>
+            
+                <label for="Codigo">Código:</label>
+                <input type="text" id="Codigo" name="Codigo" required><br><br>
+            
+                <label for="Descricao">Descrição:</label>
+                <input type="text" id="Descricao" name="Descricao" required><br><br>
+            
+                <label for="Unitario">Valor Unitário:</label>
+                <input type="number" step="0.01" id="Unitario" name="Unitario" required><br><br>
+                
+                <label for="Total">Total:</label>
+                <input type="text" id="Total" name="Total" readonly><br><br>
+            
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+            
+            <button id="btnFecharModal" class="btn btn-secondary">Fechar</button>
+        </dialog>
+    </main>
+</body>
+</html>
